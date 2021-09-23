@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="container my-4">
+    <h2>Add your assignments</h2>
+    <form action="/" method="POST">
+        <div class="mb-3">
+            <label for="title" class="form-label">Enter Task</label>
+            <input type="text" class="form-control" name="title" id="title" aria-describedby="emailHelp">
+
+        </div>
+        <div class="mb-3">
+            <label for="desc" class="form-label">Task details</label>
+            <input type="text" class="form-control" name="desc" id="desc">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+<div class="container my-4">
+    <h2>Your TASKS</h2>
+    <table class="table">
+        {% if allTodo|length==0 %}
+        <div class="alert alert-danger" role="alert">
+            <h6>NO TASKS Found! Add your first task</h6>
+        </div>
+        {% else %}
+        <thead>
+            <tr>
+                <th scope="col">All Tasks</th>
+                <th scope="col">title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Time</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% endif %}
+            {% for todo in allTodo %}
+            <tr>
+                <th scope="row">{{loop.index}}</th>
+                <td>{{todo.title}}</td>
+                <td>{{todo.desc}}</td>
+                <td>{{todo.date_created}}</td>
+                <td>
+                    <a href="/delete/{{todo.sno}}" type="button" class="btn btn-danger btn-sm mx-2">DELETE</button>
+                    <a href="/update/{{todo.sno}}" type="button" class="btn btn-warning btn-sm mx-2 my-1">UPDATE</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock body %}
